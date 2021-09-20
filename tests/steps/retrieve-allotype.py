@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 # from behave import *
 # from hamcrest import assert_that, is_
-#from behave_restful.lang import *
+# from behave_restful.lang import *
 
 # @given('the HLA-B allotypes as {allotype_names}')
 # def step_impl(context, allotype_names):

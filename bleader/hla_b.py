@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@ import re
 import requests
 import json
 
+
 class HlaBAllotype(object):
-    
     def __init__(self, allotype_name: str) -> None:
         """
         Represents an allotype. In this context, only B-allotypes are allowed.
@@ -37,31 +37,39 @@ class HlaBAllotype(object):
         self.is_gl, self.alleles = self._is_gl()
         if self.is_gl:
             self.fields = None
-            self.resolution = 'intermediate'
+            self.resolution = "intermediate"
         else:
-            self.locus, self.fields, self.resolution, self.var_expression, self.g_group = self._get_info()
+            (
+                self.locus,
+                self.fields,
+                self.resolution,
+                self.var_expression,
+                self.g_group,
+            ) = self._get_info()
             self.alleles = self._get_potential_alleles()
 
     def _is_gl(self):
-        """ 
+        """
         Detects if allotype_name is in a GL format
         :return: boolean and list of HlaBAllotype objects
         """
         try:
-            if '/' in self.name:
+            if "/" in self.name:
                 alleles = []
                 prefix = None
-                if self.name.count(':') == 1:
-                    prefix = self.name.split(':')[0]
-                pot_alleles = self.name.split('/')
+                if self.name.count(":") == 1:
+                    prefix = self.name.split(":")[0]
+                pot_alleles = self.name.split("/")
                 for i, allele in enumerate(pot_alleles):
-                    if ':' not in allele and prefix:
-                        allele = prefix + ':' + allele
-                    if i != 0 and 'B*' not in allele:
-                        if ':' not in allele:
-                            allele = ':'.join(pot_alleles[0].split(':')[:-1]) + ':' + allele
+                    if ":" not in allele and prefix:
+                        allele = prefix + ":" + allele
+                    if i != 0 and "B*" not in allele:
+                        if ":" not in allele:
+                            allele = (
+                                ":".join(pot_alleles[0].split(":")[:-1]) + ":" + allele
+                            )
                         else:
-                            allele = 'B*' + allele
+                            allele = "B*" + allele
                     allotype = HlaBAllotype(allele)
                     alleles.append(allotype)
                 return True, alleles
@@ -76,19 +84,20 @@ class HlaBAllotype(object):
         If typing is intermediate, expands the alleles via a MAC service.
         :return: list of HlaBAllotype objects
         """
-        if self.resolution == 'intermediate':
+        if self.resolution == "intermediate":
             url = "https://hml.nmdp.org/mac/api/expand?typing="
             try:
-                response = requests.get(url + 'HLA-' + self.name)
+                response = requests.get(url + "HLA-" + self.name)
                 data = json.loads(response.content)
-                expanded_list = [result['expanded'].replace('HLA-','') for result in data]
+                expanded_list = [
+                    result["expanded"].replace("HLA-", "") for result in data
+                ]
                 return [HlaBAllotype(hla_name) for hla_name in expanded_list]
             except Exception as e:
                 raise e
         else:
             return [self]
 
-    
     def _get_info(self):
         """
         Extracts the locus name, a list of fields (integers),
@@ -98,46 +107,64 @@ class HlaBAllotype(object):
         :return: type (str), fields (list)
         """
         try:
-            locus, fields = self.name.split('*')
+            locus, fields = self.name.split("*")
         except:
-            raise InvalidHlaBAllotypeError(self.name, "Allele needs to contain exactly one asterisk '*'.")
-        
-        if locus != 'B':
-            raise InvalidHlaBAllotypeError(self.name, "The allele's locus is not supported. "
-                                            "Please use an HLA-B allele (ex: B*07:02).")
+            raise InvalidHlaBAllotypeError(
+                self.name, "Allele needs to contain exactly one asterisk '*'."
+            )
 
-        if not re.match('[\d]+(\:[A-Z\d]+)*[A-Z]?$', fields):
-            raise InvalidHlaBAllotypeError(self.name, "The fields are incorrectly formatted. "
-                                            "Please include at least one field (integers). "
-                                            "Additional fields are appended with a preceding semicolon ':'. "
-                                            "For example, B*07:02 is a valid format but A*07:02: is not.")
-        
-        g_group =  bool(re.search('\d+G$', self.name))
-        var_expression = ((re.search('\d+[A-Z]$', self.name) and not g_group) and
-                          fields[-1] or None)
-        if var_expression: fields = fields[:-1]
+        if locus != "B":
+            raise InvalidHlaBAllotypeError(
+                self.name,
+                "The allele's locus is not supported. "
+                "Please use an HLA-B allele (ex: B*07:02).",
+            )
 
-        fields = fields.split(':')
-        resolution = (len(fields) == 1 and 'low' or
-                           (g_group or re.match('^[A-Z]+$', fields[1])) and 'intermediate' or
-                           re.match('^[0-9]+$', fields[1]) and 'high'  or None)
+        if not re.match("[\d]+(\:[A-Z\d]+)*[A-Z]?$", fields):
+            raise InvalidHlaBAllotypeError(
+                self.name,
+                "The fields are incorrectly formatted. "
+                "Please include at least one field (integers). "
+                "Additional fields are appended with a preceding semicolon ':'. "
+                "For example, B*07:02 is a valid format but A*07:02: is not.",
+            )
+
+        g_group = bool(re.search("\d+G$", self.name))
+        var_expression = (
+            (re.search("\d+[A-Z]$", self.name) and not g_group) and fields[-1] or None
+        )
+        if var_expression:
+            fields = fields[:-1]
+
+        fields = fields.split(":")
+        resolution = (
+            len(fields) == 1
+            and "low"
+            or (g_group or re.match("^[A-Z]+$", fields[1]))
+            and "intermediate"
+            or re.match("^[0-9]+$", fields[1])
+            and "high"
+            or None
+        )
         while len(fields) < 4:
             fields.append(None)
         if not resolution:
-            raise InvalidAlleleError(self.name, "The level of typing resolution cannot be determined.")
+            raise InvalidAlleleError(
+                self.name, "The level of typing resolution cannot be determined."
+            )
         return locus, fields, resolution, var_expression, g_group
 
     def __str__(self) -> str:
         return self.name
-    
+
     def __iter__(self):
-        yield 'name', self.name
+        yield "name", self.name
 
     def __repr__(self):
         return self.name
 
-class HlaBGenotype(object):
 
+class HlaBGenotype(object):
     def __init__(self, genotype_code, id=None) -> None:
         """
         Represents a pair of HLA-B allotypes. Needs to be delimited by either a
@@ -149,13 +176,14 @@ class HlaBGenotype(object):
         """
 
         self.id = id
-        if '+' in genotype_code:
-            self.delimiter = '+'
-        elif '~' in genotype_code:
-            self.delimiter = '~'
+        if "+" in genotype_code:
+            self.delimiter = "+"
+        elif "~" in genotype_code:
+            self.delimiter = "~"
         else:
-            raise InvalidHlaBGenotypeError(genotype_code,
-                    "Genotype is not split by '+' or '~'")
+            raise InvalidHlaBGenotypeError(
+                genotype_code, "Genotype is not split by '+' or '~'"
+            )
 
         allotypes = genotype_code.split(self.delimiter)
 
@@ -164,13 +192,14 @@ class HlaBGenotype(object):
             self.allotypes.append(HlaBAllotype(allotype))
 
         if len(allotypes) != 2:
-            raise InvalidHlaBGenotypeError(allotypes,
-                    "Genotype does not contain exactly two allotypes")
-        
+            raise InvalidHlaBGenotypeError(
+                allotypes, "Genotype does not contain exactly two allotypes"
+            )
+
         self.flip_matched = False
         self.flip_sorted = False
         self._set_name_and_allotypes(self._sort(self.allotypes))
-    
+
     def flip(self):
         allotypes = self.allotypes
         allotypes.reverse()
@@ -180,7 +209,9 @@ class HlaBGenotype(object):
 
     def _set_name_and_allotypes(self, allotypes):
         self.first_allotype, self.second_allotype = self.allotypes = allotypes
-        self.name = str(self.first_allotype) + self.delimiter + str(self.second_allotype)
+        self.name = (
+            str(self.first_allotype) + self.delimiter + str(self.second_allotype)
+        )
 
     def _sort(self, allotypes):
         """
@@ -190,7 +221,7 @@ class HlaBGenotype(object):
 
         Empty fields have lower priority over populated, numeric fields.
 
-        :param allotypes: 
+        :param allotypes:
         :type allotypes: List of Allotype objects
         """
         if not allotypes[0].fields or not allotypes[1].fields:
@@ -200,7 +231,7 @@ class HlaBGenotype(object):
         reversed = False
         while i < len(fields_a) - 1 and i < len(fields_b) - 1 and not reversed:
             i += 1
-            if re.match('\d+', str(fields_a[i])) and re.match('\d+', str(fields_b[i])):
+            if re.match("\d+", str(fields_a[i])) and re.match("\d+", str(fields_b[i])):
                 field_a, field_b = int(fields_a[i]), int(fields_b[i])
             else:
                 field_a, field_b = str(fields_a[i]), str(fields_b[i])
@@ -221,23 +252,23 @@ class HlaBGenotype(object):
 
     def __str__(self) -> str:
         return self.name
-    
+
     def __iter__(self):
-        yield 'id', self.id
-        yield 'name', self.name
-        yield 'flip_sorted', self.flip_sorted
-        yield 'flip_matched', self.flip_matched
-        yield 'allotype_one', dict(self.first_allotype)
-        yield 'allotype_two', dict(self.second_allotype)
+        yield "id", self.id
+        yield "name", self.name
+        yield "flip_sorted", self.flip_sorted
+        yield "flip_matched", self.flip_matched
+        yield "allotype_one", dict(self.first_allotype)
+        yield "allotype_two", dict(self.second_allotype)
+
 
 class InvalidHlaBAllotypeError(Exception):
-
     def __init__(self, allotype_name, message) -> None:
         self.allotype_name = allotype_name
         self.message = message
 
-class InvalidHlaBGenotypeError(Exception):
 
+class InvalidHlaBGenotypeError(Exception):
     def __init__(self, genotype_code, message) -> None:
         self.genotype_code = genotype_code
         self.message = message

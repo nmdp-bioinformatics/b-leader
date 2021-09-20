@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,9 +23,9 @@ class Subject(object):
         self.project = project
         self.alleles = {}
         self.broad_race = broad_race
-        
+
     def add_allele(self, allele_index, allele):
-        self.alleles[allele_index] = allele   
-    
+        self.alleles[allele_index] = allele
+
     def __repr__(self):
         return str(self.alleles)

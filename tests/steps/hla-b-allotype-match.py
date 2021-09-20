@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,18 @@ from hamcrest import assert_that, is_
 from bleader.hla_b import HlaBAllotype
 from bleader.match import HlaBAllotypeMatch
 
-@given('that the two HLA-B allotypes are {allotype_one} and {allotype_two}')
+
+@given("that the two HLA-B allotypes are {allotype_one} and {allotype_two}")
 def step_impl(context, allotype_one, allotype_two):
     context.allotype_one = HlaBAllotype(allotype_one)
     context.allotype_two = HlaBAllotype(allotype_two)
 
-@when('evaluating the match grade between the two allotypes')
+
+@when("evaluating the match grade between the two allotypes")
 def step_impl(context):
     context.match_grade = HlaBAllotypeMatch(context.allotype_one, context.allotype_two)
 
-@then('the match grade is found to be {match_grade}')
+
+@then("the match grade is found to be {match_grade}")
 def step_impl(context, match_grade):
     assert_that(str(context.match_grade), is_(match_grade))

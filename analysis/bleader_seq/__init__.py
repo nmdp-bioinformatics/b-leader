@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify

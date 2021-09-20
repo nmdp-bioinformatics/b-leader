@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@
 #
 from .allele_family import AlleleFamily
 
+
 class Allele(AlleleFamily):
     def __init__(self, name):
         super().__init__(name)
-        
+
     def variation(self):
-        if len([leader for leader in self.leaders.values()
-                if leader.name]) > 1:
-            if 'M' in self.leaders and 'T' in self.leaders:
-                m_count = self.leaders['M'].count
-                t_count = self.leaders['T'].count
+        if len([leader for leader in self.leaders.values() if leader.name]) > 1:
+            if "M" in self.leaders and "T" in self.leaders:
+                m_count = self.leaders["M"].count
+                t_count = self.leaders["T"].count
                 total_count = m_count + t_count
                 if None in self.leaders:
                     total_count += self.leaders[None].count
@@ -41,13 +41,13 @@ class Allele(AlleleFamily):
                 return None
         else:
             return None
-        
+
     def primary_leader(self):
         # Sets the leadre with the most counts
         leaders = {}
         for name, leader in self.leaders.items():
             leaders[name] = leader.count
         return max(leaders, key=leaders.get)
-            
+
     def __repr__(self):
         return "%s (%s)" % (self.name, self.variation())

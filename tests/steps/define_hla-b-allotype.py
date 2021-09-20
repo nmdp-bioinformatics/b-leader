@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,8 @@ from behave import *
 from hamcrest import assert_that, is_
 from bleader.hla_b import HlaBAllotype, InvalidHlaBAllotypeError
 
-@given('that the allotype name is {allotype_name}')
+
+@given("that the allotype name is {allotype_name}")
 def step_impl(context, allotype_name):
     try:
         context.allotype = HlaBAllotype(allotype_name)
@@ -30,32 +31,37 @@ def step_impl(context, allotype_name):
         print(e)
         context.valid_allotype = "invalid"
 
-@when('evaluating the validity of the allotype name')
+
+@when("evaluating the validity of the allotype name")
 def step_impl(context):
     pass
 
-@when('retrieving the field values')
+
+@when("retrieving the field values")
 def step_impl(context):
     try:
-        context.fields = ', '.join([f for f in context.allotype.fields if f])
+        context.fields = ", ".join([f for f in context.allotype.fields if f])
     except:
         context.fields = "invalid"
 
-@then('the allotype name is found to be {validity}')
+
+@then("the allotype name is found to be {validity}")
 def step_impl(context, validity: str):
     assert_that(context.valid_allotype, is_(validity))
-    
-@then('the field list should be {field_list}')
+
+
+@then("the field list should be {field_list}")
 def step_impl(context, field_list):
     assert_that(context.fields, is_(field_list))
 
 
-@when('extracting the possible high-resolution alleles')
+@when("extracting the possible high-resolution alleles")
 def step_impl(context):
     alleles = context.allotype.alleles[:3]
     allele_names = [allele.name for allele in alleles]
-    context.high_res_alleles = ','.join(allele_names)
+    context.high_res_alleles = ",".join(allele_names)
 
-@then('the first three alleles are found to be {allele_list}')
+
+@then("the first three alleles are found to be {allele_list}")
 def step_impl(context, allele_list):
     assert_that(context.high_res_alleles, is_(allele_list))

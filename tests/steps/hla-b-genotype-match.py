@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,42 +22,49 @@ from hamcrest import assert_that, is_
 from bleader.hla_b import HlaBGenotype
 from bleader.match import HlaBGenotypeMatch
 
-@given('two HLA-B genotype names as {genotype_name_one} and {genotype_name_two}')
+
+@given("two HLA-B genotype names as {genotype_name_one} and {genotype_name_two}")
 def step_impl(context, genotype_name_one, genotype_name_two):
     context.genotype_name_one = genotype_name_one
     context.genotype_name_two = genotype_name_two
 
-@when('sorting the order of the genotypes')
+
+@when("sorting the order of the genotypes")
 def step_impl(context):
     context.genotype_one = HlaBGenotype(context.genotype_name_one)
     context.genotype_two = HlaBGenotype(context.genotype_name_two)
-    context.sort_one = context.genotype_one.flip_sorted and 'sorted' or 'unsorted'
-    context.sort_two = context.genotype_two.flip_sorted and 'sorted' or 'unsorted'
+    context.sort_one = context.genotype_one.flip_sorted and "sorted" or "unsorted"
+    context.sort_two = context.genotype_two.flip_sorted and "sorted" or "unsorted"
 
-@when('evaluating the match grades between the two genotypes and flipping as needed')
+
+@when("evaluating the match grades between the two genotypes and flipping as needed")
 def step_impl(context):
     genotype_match = HlaBGenotypeMatch(context.genotype_one, context.genotype_two)
-    context.match_grades = genotype_match.matches[0]['match_code']
-    context.genotype_one = genotype_match.matches[0]['genotype_patient']
-    context.genotype_two = genotype_match.matches[0]['genotype_donor']
-    context.flip_one = context.genotype_one.flip_matched and 'flipped' or 'unflipped'
-    context.flip_two = context.genotype_two.flip_matched and 'flipped' or 'unflipped'
+    context.match_grades = genotype_match.matches[0]["match_code"]
+    context.genotype_one = genotype_match.matches[0]["genotype_patient"]
+    context.genotype_two = genotype_match.matches[0]["genotype_donor"]
+    context.flip_one = context.genotype_one.flip_matched and "flipped" or "unflipped"
+    context.flip_two = context.genotype_two.flip_matched and "flipped" or "unflipped"
 
-@then('the genotypes are found to be {sort_one} and {sort_two}, respectively')
+
+@then("the genotypes are found to be {sort_one} and {sort_two}, respectively")
 def step_impl(context, sort_one, sort_two):
     assert_that(context.sort_one, is_(sort_one))
     assert_that(context.sort_two, is_(sort_two))
 
-@then('the match grades are found to be {match_grades}')
+
+@then("the match grades are found to be {match_grades}")
 def step_impl(context, match_grades):
     assert_that(str(context.match_grades), is_(match_grades))
 
-@then('the matched genotypes are found to be {matched_one} and {matched_two}')
+
+@then("the matched genotypes are found to be {matched_one} and {matched_two}")
 def step_impl(context, matched_one, matched_two):
     assert_that(str(context.genotype_one), is_(matched_one))
     assert_that(str(context.genotype_two), is_(matched_two))
 
-@then('the genotypes were matched as {flip_one} and {flip_two}, respectively')
+
+@then("the genotypes were matched as {flip_one} and {flip_two}, respectively")
 def step_impl(context, flip_one, flip_two):
     assert_that(str(context.flip_one), is_(flip_one))
     assert_that(str(context.flip_two), is_(flip_two))
