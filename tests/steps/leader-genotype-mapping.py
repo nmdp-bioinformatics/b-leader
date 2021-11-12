@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,17 +22,21 @@ from hamcrest import assert_that, is_
 from bleader.hla_b import HlaBGenotype
 from bleader.mapper import LeaderMapper
 
-@given('the HLA-B genotype as {genotype_name}')
+
+@given("the HLA-B genotype as {genotype_name}")
 def step_impl(context, genotype_name):
     context.genotype = HlaBGenotype(genotype_name)
 
-@when('translated to a leader genotype')
+
+@when("translated to a leader genotype")
 def step_impl(context):
     mapper = LeaderMapper()
     leader_info = mapper.get_leader_genotype_info(context.genotype)
-    context.leader_genotype = (str(leader_info["hla-b_allotype_one"]["common_leader"]) +
-                              str(leader_info["hla-b_allotype_two"]["common_leader"]))
+    context.leader_genotype = str(
+        leader_info["hla-b_allotype_one"]["common_leader"]
+    ) + str(leader_info["hla-b_allotype_two"]["common_leader"])
 
-@then('the leader genotype is {leaders}')
+
+@then("the leader genotype is {leaders}")
 def step_impl(context, leaders):
     assert_that(context.leader_genotype, is_(leaders))

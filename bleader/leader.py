@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 class LeaderAllotype(object):
-
     def __init__(self, leader_name: str) -> None:
         """
         Represents a leader allotype categorized from the cleaved leader peptide from
@@ -31,21 +30,21 @@ class LeaderAllotype(object):
         self.name = leader_name
         # if self.name not in ['M', 'T', 'X']:
         #     raise InvalidLeaderAllotypeError(leader_name, "Leader allotype is neither M, T, nor X (undefined)")
-    
+
     def __str__(self) -> str:
         return self.name
-    
+
     def __repr__(self):
         return self.name
 
-class InvalidLeaderAllotypeError(Exception):
 
+class InvalidLeaderAllotypeError(Exception):
     def __init__(self, leader_name, message) -> None:
         self.leader_name = leader_name
         self.message = message
 
-class LeaderGenotype(object):
 
+class LeaderGenotype(object):
     def __init__(self, leader_name) -> None:
         """
         The leader genotype is a two-letter code representing a pair of leader allotypes.
@@ -57,10 +56,12 @@ class LeaderGenotype(object):
         self.name = leader_name
 
         if self.name not in ["MM", "TT", "MT", "TM"]:
-            raise InvalidLeaderGenotypeError(leader_name, "Leader genotype is not MM, TT, MT, nor TM")
+            raise InvalidLeaderGenotypeError(
+                leader_name, "Leader genotype is not MM, TT, MT, nor TM"
+            )
+
 
 class InvalidLeaderGenotypeError(Exception):
-
     def __init__(self, leader_name, message) -> None:
         self.leader_name = leader_name
         self.message = message

@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,23 +23,27 @@ from bleader.match import HlaBGenotypeMatch
 from bleader.hla_b import HlaBGenotype
 from bleader.mapper import LeaderMapper
 
+
 @given('the patient genotype is "{genotype_patient}"')
 def step_impl(context, genotype_patient):
     context.genotype_patient = HlaBGenotype(genotype_patient)
 
-@given('a list of donor genotypes')
+
+@given("a list of donor genotypes")
 def step_impl(context):
     donors = []
     for row in context.table:
         donors.append(HlaBGenotype(row["HLA-B Genotype"]))
     context.genotypes_donors = donors
 
-@when('the donors are ranked')
+
+@when("the donors are ranked")
 def step_impl(context):
     mapper = LeaderMapper()
     match = HlaBGenotypeMatch(context.genotype_patient, context.genotypes_donors)
     match_status_info = mapper.get_match_status_info(match)
     context.rank_list = ",".join([str(subj["rank"]) for subj in match_status_info])
+
 
 @then('the ranks are computed to be "{rank_list}", respectively')
 def step_impl(context, rank_list):

@@ -46,7 +46,7 @@ RUN mkdir -p /app/logs/
 RUN pip install -r requirements.txt
 
 COPY --from=angular-builder ./ng-app/dist/bleader /usr/share/nginx/html
-COPY webapp/nginx-conf/default.conf /etc/nginx/conf.d/
+COPY webapp/nginx-conf/default.conf /etc/nginx/http.d/
 COPY docker-entrypoint-unified-prod.sh /usr/local/bin/
 
 

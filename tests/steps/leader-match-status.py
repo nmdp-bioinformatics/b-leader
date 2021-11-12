@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,17 +23,20 @@ from bleader.hla_b import HlaBGenotype
 from bleader.match import HlaBGenotypeMatch
 from bleader.mapper import LeaderMapper
 
-@given('the HLA-B genotypes as {genotype_one} and {genotype_two}')
+
+@given("the HLA-B genotypes as {genotype_one} and {genotype_two}")
 def step_impl(context, genotype_one, genotype_two):
     context.genotype_match = HlaBGenotypeMatch(genotype_one, genotype_two)
 
-@when('the match status between them is computed')
+
+@when("the match status between them is computed")
 def step_impl(context):
     mapper = LeaderMapper()
     match_status_info = mapper.get_match_status_info(context.genotype_match)[0]
     context.match_status = match_status_info["leader_match_status"] or "invalid"
 
-@then('the match status is found to be {match_status}')
+
+@then("the match status is found to be {match_status}")
 def step_impl(context, match_status):
     assert_that(context.match_status, is_(match_status))
 
@@ -42,6 +45,7 @@ def step_impl(context, match_status):
 def step_impl(context, genotype_patient):
     context.genotype_patient = HlaBGenotype(genotype_patient)
 
+
 @given("the donors' HLA-B genotypes")
 def step_impl(context):
     donors = []
@@ -49,12 +53,16 @@ def step_impl(context):
         donors.append(HlaBGenotype(row["HLA-B Genotype"]))
     context.genotypes_donors = donors
 
-@when('the match statuses are evaluated')
+
+@when("the match statuses are evaluated")
 def step_impl(context):
     mapper = LeaderMapper()
     match = HlaBGenotypeMatch(context.genotype_patient, context.genotypes_donors)
     match_status_info = mapper.get_match_status_info(match)
-    context.match_statuses = ",".join([subj["leader_match_status"] for subj in match_status_info])
+    context.match_statuses = ",".join(
+        [subj["leader_match_status"] for subj in match_status_info]
+    )
+
 
 @then('they are found to be "{match_statuses}"')
 def step_impl(context, match_statuses):

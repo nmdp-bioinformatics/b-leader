@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@
 from collections import OrderedDict
 import csv
 
-class LeaderMap(object):
 
+class LeaderMap(object):
     def __init__(self) -> None:
         self.table_path = "data/table/leader_map.csv"
         self.leader_map = self._init_leader_map()
@@ -31,25 +31,27 @@ class LeaderMap(object):
 
     def _init_leader_map(self):
         leader_map = {}
-        with open(self.table_path, 'r', encoding='utf-8-sig') as csv_file:
+        with open(self.table_path, "r", encoding="utf-8-sig") as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
                 try:
-                    allele = row['Allele']
-                    leader_type = row['Leader Type']
-                    if leader_type == '*':
-                        leader_type = 'X'
-                    elif leader_type == '-':
-                        leader_type = 'M'
+                    allele = row["Allele"]
+                    leader_type = row["Leader Type"]
+                    if leader_type == "*":
+                        leader_type = "X"
+                    elif leader_type == "-":
+                        leader_type = "M"
                     leader_map[allele.strip()] = leader_type
                 except:
-                    raise InvalidLeaderMapError(self.table_path, 
-                            "Mapping file is not in the correct format. "
-                            "Ensure there are only two comma-delimited columns (allele, leader type).")
+                    raise InvalidLeaderMapError(
+                        self.table_path,
+                        "Mapping file is not in the correct format. "
+                        "Ensure there are only two comma-delimited columns (allele, leader type).",
+                    )
         return leader_map
 
-class InvalidLeaderMapError(Exception):
 
+class InvalidLeaderMapError(Exception):
     def __init__(self, path, message) -> None:
         self.file_path = path
         self.message = message

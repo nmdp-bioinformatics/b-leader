@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,20 @@
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC
 
+
 class Sequence(object):
-    def __init__(self, sequence, allele=None, index=0,
-                    seqs=[], seq_type = "nt",
-                    ref_sequence=None, id=None, source=None, reduced=False):
+    def __init__(
+        self,
+        sequence,
+        allele=None,
+        index=0,
+        seqs=[],
+        seq_type="nt",
+        ref_sequence=None,
+        id=None,
+        source=None,
+        reduced=False,
+    ):
         self.allele = allele
         self.index = index
         self.seq_type = seq_type
@@ -51,7 +61,7 @@ class Sequence(object):
         """
         if not self.ref_sequence:
             return
-        if '-' in self.seq and self.ref_sequence:
+        if "-" in self.seq and self.ref_sequence:
             self.alignment = self.seq
             self.seq = ""
             for i, nt in enumerate(self.alignment):
@@ -63,7 +73,7 @@ class Sequence(object):
             for i, nt in enumerate(self.seq):
                 try:
                     if i < len(self.ref_sequence) and nt == self.ref_sequence[i]:
-                        nt = '-'
+                        nt = "-"
                     self.alignment += nt
                 except:
                     return
@@ -73,26 +83,29 @@ class Sequence(object):
             self.peptide = self.seq
         self.peptide = self.translate(self.seq)
         self.leader_peptide, self.leader_type = self._calculate_leader_info()
-    
+
     def translate(self, sequence: str) -> str:
         try:
-            is_empty = all([nt == '*' for nt in sequence])
-            if len(sequence) == 3 and sequence[2] == '*' and not is_empty:
-                possible_AAs = set([self.translate(sequence[:2] + nt) for nt in ['A', 'T', 'G', 'C']])
+            is_empty = all([nt == "*" for nt in sequence])
+            if len(sequence) == 3 and sequence[2] == "*" and not is_empty:
+                possible_AAs = set(
+                    [self.translate(sequence[:2] + nt) for nt in ["A", "T", "G", "C"]]
+                )
                 if len(possible_AAs) == 1:
                     return possible_AAs.pop()
                 else:
-                    return '*'
+                    return "*"
             if len(sequence) <= 3:
                 if is_empty:
-                    return '*'
-                return str(Seq(sequence, IUPAC.unambiguous_dna) \
-                                    .transcribe().translate())
+                    return "*"
+                return str(
+                    Seq(sequence, IUPAC.unambiguous_dna).transcribe().translate()
+                )
             else:
                 return self.translate(sequence[:3]) + self.translate(sequence[3:])
         except Exception as e:
-            return '*'
-    
+            return "*"
+
     def contains(self, other) -> bool:
         """
         Determines if this sequence contains the other sequence.
@@ -101,14 +114,14 @@ class Sequence(object):
             return any([other == seq for seq in self.seqs])
         else:
             return self.seq == other.seq
-        
+
     def _calculate_leader_info(self) -> (str, str):
         leader_peptide = self.peptide[2:11]
         return leader_peptide, leader_peptide[1]
-    
+
     def _is_empty(self, seq):
-        return len(seq.replace('*', '')) == 0
-        
+        return len(seq.replace("*", "")) == 0
+
     def spaced_codons(self, sequence=None):
         if not sequence:
             sequence = self.seq
@@ -118,14 +131,17 @@ class Sequence(object):
                 spaced_seq += " "
             spaced_seq += sequence[i]
         return spaced_seq
-    
+
     def formatted(self):
         if self.ref_sequence == self:
             return self.spaced_codons()
         min_len = min(self.ref_sequence.length, self.length)
-        sequence= ''.join([self.ref_sequence.seq[i] == self.seq[i] and
-                         '-' or self.seq[i] 
-                        for i in range(min_len)])
+        sequence = "".join(
+            [
+                self.ref_sequence.seq[i] == self.seq[i] and "-" or self.seq[i]
+                for i in range(min_len)
+            ]
+        )
         return self.spaced_codons(sequence=sequence)
 
     def __eq__(self, other):

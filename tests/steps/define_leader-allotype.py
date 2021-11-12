@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2021 Be The Match.
 #
-# This file is part of BLEAT 
+# This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,8 @@ from behave import *
 from hamcrest import assert_that, is_
 from bleader.leader import LeaderAllotype, InvalidLeaderAllotypeError
 
-@given('that the leader allotype name is {leader_type}')
+
+@given("that the leader allotype name is {leader_type}")
 def step_impl(context, leader_type):
     try:
         context.leaderAllotype = LeaderAllotype(leader_type)
@@ -29,10 +30,12 @@ def step_impl(context, leader_type):
     except:
         context.validity = "invalid"
 
-@when('evaluating the validity of the leader allotype name')
+
+@when("evaluating the validity of the leader allotype name")
 def step_impl(context):
     pass
 
-@then('the leader allotype name is found to be {validity}')
+
+@then("the leader allotype name is found to be {validity}")
 def step_impl(context, validity):
     assert_that(context.validity, is_(validity))
