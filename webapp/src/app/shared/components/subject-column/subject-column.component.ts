@@ -43,8 +43,8 @@ export class SubjectColumnComponent implements OnInit, AfterViewInit {
   @Output() changeRow = new EventEmitter<Object>();
   limit : number;
   selectIndex: number = 0;
-  @ViewChild(SubjectRowComponent, {static: false}) elementView: ElementRef;
-  @ViewChild('content', {static : false}) contentView: ElementRef;
+  @ViewChild(SubjectRowComponent) elementView: ElementRef;
+  @ViewChild('content') contentView: ElementRef;
   constructor(private subjectsService: SubjectsService,
     private importService : ImportService) { }
 
