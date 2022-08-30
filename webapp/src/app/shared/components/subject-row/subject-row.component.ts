@@ -19,7 +19,7 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Subject } from '@app/shared/models/subject/subject.model';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-subject-row',
@@ -39,7 +39,7 @@ export class SubjectRowComponent implements OnInit {
   @Output() notifyMovedPatientGenotype: EventEmitter<boolean> = new EventEmitter();
   @Output() removeSubject: EventEmitter<number> = new EventEmitter();
   initiatedMatching: boolean = false;
-  id = new FormControl();
+  id = new UntypedFormControl();
 
   constructor() { }
 
