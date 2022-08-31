@@ -1,6 +1,6 @@
 #!env/bin/python
 #
-# Copyright (c) 2021 Be The Match.
+# Copyright (c) 2022 Be The Match.
 #
 # This file is part of BLEAT
 # (see https://github.com/nmdp-bioinformatics/b-leader).

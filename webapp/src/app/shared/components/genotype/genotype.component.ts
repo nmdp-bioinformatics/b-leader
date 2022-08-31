@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -20,7 +20,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subject } from '@app/shared/models/subject/subject.model'
 import { LeaderMatchingService } from '@app/core/services/bleader/leaderMatching/leader-matching.service';
-import { getMatScrollStrategyAlreadyAttachedError } from '@angular/cdk/overlay/typings/scroll/scroll-strategy';
+// import { getMatScrollStrategyAlreadyAttachedError } from '@angular/cdk/overlay/typings/scroll/scroll-strategy';
 import { ImportService } from '@app/core/services/import/import.service';
 
 @Component({

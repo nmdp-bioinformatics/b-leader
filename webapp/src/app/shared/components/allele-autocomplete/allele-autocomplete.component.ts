@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Subject } from '@app/shared/models/subject/subject.model';
@@ -40,7 +40,7 @@ export class AlleleAutocompleteComponent implements OnInit {
   @Input() allotype: Allotype;
   @Output() hlaBinput = new EventEmitter<string>();
 
-  allotypeForm = new FormControl();
+  allotypeForm = new UntypedFormControl();
   filteredOptions: Observable<string[]>;
 
 

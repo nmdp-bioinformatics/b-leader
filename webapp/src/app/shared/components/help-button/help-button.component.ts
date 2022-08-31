@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-help-button',

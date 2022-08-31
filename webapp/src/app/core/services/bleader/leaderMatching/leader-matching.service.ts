@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from '@app/shared/models/subject/subject.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../../../../environments/environment";
-import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+// import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'

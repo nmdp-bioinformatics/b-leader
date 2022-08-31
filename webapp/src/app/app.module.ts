@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -24,10 +24,10 @@ import { ReactiveFormsModule,
          FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialogModule,
-  MatInputModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -68,63 +68,59 @@ import { Papa } from 'ngx-papaparse';
 import { FileSaverService } from 'ngx-filesaver';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MatchingStatusComponent,
-    GenotypeComponent,
-    SubjectColumnComponent,
-    ControlPanelComponent,
-    AlleleAutocompleteComponent,
-    AllotypeComponent,
-    LeaderComponent,
-    IntroComponent,
-    SubjectsComponent,
-    NavbarComponent,
-    SortButtonComponent,
-    ExportButtonComponent,
-    ImportButtonComponent,
-    UndoButtonComponent,
-    ImportDialogComponent,
-    DiagramComponent,
-    SubjectRowComponent,
-    SubjectHeaderComponent,
-    MatchBlockComponent,
-    LeaderMatchBlockComponent,
-    ClearButtonComponent,
-    DefaultButtonComponent,
-    HelpButtonComponent,
-    HelpDialogComponent,
-    PatientPanelComponent,
-    RiskBarComponent,
-    FootbarComponent,
-    ProgressBarComponent
-  ],
-  entryComponents: [
-    ImportDialogComponent,
-    HelpDialogComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FileSaverModule,
-    FormsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatProgressBarModule,
-    MatTableModule,
-    MatTooltipModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    HttpClientModule
-  ],
-  exports: [
-    MatDialogModule,
-    MatProgressBarModule
-  ],
-  providers: [Papa, FileSaverService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MatchingStatusComponent,
+        GenotypeComponent,
+        SubjectColumnComponent,
+        ControlPanelComponent,
+        AlleleAutocompleteComponent,
+        AllotypeComponent,
+        LeaderComponent,
+        IntroComponent,
+        SubjectsComponent,
+        NavbarComponent,
+        SortButtonComponent,
+        ExportButtonComponent,
+        ImportButtonComponent,
+        UndoButtonComponent,
+        ImportDialogComponent,
+        DiagramComponent,
+        SubjectRowComponent,
+        SubjectHeaderComponent,
+        MatchBlockComponent,
+        LeaderMatchBlockComponent,
+        ClearButtonComponent,
+        DefaultButtonComponent,
+        HelpButtonComponent,
+        HelpDialogComponent,
+        PatientPanelComponent,
+        RiskBarComponent,
+        FootbarComponent,
+        ProgressBarComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FileSaverModule,
+        FormsModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatProgressBarModule,
+        MatTableModule,
+        MatTooltipModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        HttpClientModule
+    ],
+    exports: [
+        MatDialogModule,
+        MatProgressBarModule
+    ],
+    providers: [Papa, FileSaverService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

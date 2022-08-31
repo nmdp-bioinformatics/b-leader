@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -33,7 +33,7 @@ export class ControlPanelComponent implements OnInit {
   @Output() sorting: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
-  @ViewChild(SortButtonComponent, {static:false}) private sort_button;
+  @ViewChild(SortButtonComponent) private sort_button;
 
   ngOnInit() {
   }
