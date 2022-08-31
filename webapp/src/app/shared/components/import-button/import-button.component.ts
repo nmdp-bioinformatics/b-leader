@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Be The Match.
+ * Copyright (c) 2022 Be The Match.
  *
  * This file is part of BLEAT 
  * (see https://github.com/nmdp-bioinformatics/b-leader).
@@ -19,7 +19,7 @@
  */
 import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { Subject } from '@app/shared/models/subject/subject.model'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubjectsService } from '@app/core/services/subjects/subjects.service';
 import { ImportService } from '@app/core/services/import/import.service';
 import { Row } from '@app/core/services/import/import.service';
